@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>阿语听播卡片</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+   <!-- 添加这行，告诉浏览器用同一个图标 -->
+  <link rel="icon" href="files/icon/r01.png" type="image/png">
+  <link rel="shortcut icon" href="files/icon/r01.png" type="image/png">
+  <link rel="apple-touch-icon" href="files/icon/r01.png">
+  <!-- 防止浏览器请求根目录的icon.png -->
+  <link rel="icon" href="files/icon/r01.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="files/icon/r01.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="files/icon/r01.png" type="image/png" sizes="64x64">
+</head>
+<body>
+
+<div class="app">
+  <h1>阿语卡片听播</h1>
+  <div class="card-info">
+    <div id="currentCard">当前: 0/0</div>
+  </div>
+
+  <div id="card" class="card">
+    <div id="arabic" class="arabic"></div>
+    <div id="ipa" class="ipa"></div>
+    <div id="cn" class="cn"></div>
+    <div id="en" class="en"></div>
+    <div id="meta" class="meta"></div>
+  </div>
+
+  <div class="main-controls">
+    <!-- 按钮组 - 放在控制面板外部 -->
+    <div class="button-group">
+      <button onclick="startRange()">开始范围</button>
+      <button onclick="prevCard()">上一个</button>
+      <button onclick="nextCard()">下一个</button>
+      <button onclick="playAudio()">播放音频</button>
+      <button id="playBtn" onclick="toggleAutoPlay()">自动播放</button>
+      <button onclick="showWordList()">单词列表</button>
+      <button class="collapse-toggle" onclick="toggleControls()"><span class="collapse-icon">▼</span>控制面板</button>
+    </div>
+    
+    <!-- 可折叠的控制面板 -->
+    <div class="controls-collapsible">
+      <div class="controls" id="controlsContent">
+        <div class="control-group">
+          <label>每日计划量 <input id="dailyPlan" type="number" value="300" min="1"></label>
+          <label>循环天数 <input id="cycleDays" type="number" value="6" min="1"></label>
+          <label>基准开始ID <input id="baseStartId" type="number" value="1" min="1"></label>
+        </div>
+        
+        <div class="control-group">
+          <label>范围选择
+            <select id="rangeSelect">
+              <option value="">请选择范围</option>
+            </select>
+          </label>
+          <button onclick="generateRanges()">生成范围</button>
+        </div>
+        
+        <div class="control-group">
+          <label>播放开始ID <input id="startId" type="number" value="1" min="1"></label>
+          <label>播放结束ID <input id="endId" type="number" value="50" min="1"></label>
+        </div>
+
+        <div class="control-group">
+          <label>播放次数
+            <select id="repeat">
+              <option>1</option>
+              <option>2</option>
+              <option selected>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </label>
+
+          <label>间隔(秒)
+            <select id="interval">
+              <option value="0">0</option>
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </label>
+
+          <label class="voice-select-wrapper">
+            音库
+            <select id="voice">
+              <option value="google_TTS">google_TTS</option>
+              <option value="fastpitch">fastpitch</option>
+              <option value="tacotron2">tacotron2</option>
+              <option value="xtts_f2">xtts_f2</option>
+            </select>
+            <!-- 随机音色按钮 -->
+            <button id="randomVoiceBtn" class="random-voice-btn" onclick="toggleRandomVoice()">
+              随机音色
+            </button>
+          </label>
+        </div>
+
+        <div class="control-group">
+          <label><input type="checkbox" id="showArabic" checked> 阿语</label>
+          <label><input type="checkbox" id="showIpa"> IPA</label>
+          <label><input type="checkbox" id="showCn" checked> 中文</label>
+          <label><input type="checkbox" id="showEn"> 英文</label>
+        </div>
+        
+        <div class="control-group">
+          <label><input type="checkbox" id="showId"> ID</label>
+          <label><input type="checkbox" id="showCefr"> CEFR</label>
+          <label><input type="checkbox" id="showFreq"> 频率</label>
+          <label><input type="checkbox" id="autoPlay" checked> 自动播放</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 单词列表弹窗 -->
+<div id="wordListModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeWordList()">&times;</span>
+    <h2>单词列表 (当前范围)</h2>
+    <div class="word-list-container">
+      <table class="word-list-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>阿语</th>
+            <th>中文释义</th>
+            <th>英文释义</th>
+          </tr>
+        </thead>
+        <tbody id="wordListBody">
+          <!-- 列表内容会通过JS动态生成 -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

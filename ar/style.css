@@ -1,0 +1,467 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: white;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #60a5fa;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.controls {
+  background: rgba(30, 41, 59, 0.8);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.control-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.control-group:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+}
+
+/* 音库选择包装器 - 适配随机按钮 */
+.voice-select-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 随机音色按钮样式 - 匹配整体风格 */
+.random-voice-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #475569;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: white;
+  font-weight: 500;
+  transition: all 0.2s;
+  min-width: auto;
+  font-size: 13px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.random-voice-btn.active {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  border-color: #16a34a;
+  color: white;
+}
+
+.random-voice-btn:hover {
+  background: linear-gradient(135deg, #273449 0%, #1e293b 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  border-color: #60a5fa;
+}
+
+.random-voice-btn.active:hover {
+  background: linear-gradient(135deg, #15803d 0%, #14532d 100%);
+  border-color: #15803d;
+}
+
+input[type="number"] {
+  width: 80px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #475569;
+  background: #1e293b;
+  color: white;
+}
+
+select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #475569;
+  background: #1e293b;
+  color: white;
+  min-width: 100px;
+}
+
+button {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  font-weight: 500;
+  transition: all 0.2s;
+  min-width: 100px;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.card-info {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.card {
+  background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 20px;
+}
+
+.arabic {
+  font-size: 64px;
+  margin-bottom: 15px;
+  font-family: Arial, sans-serif;
+  color: #fbbf24;
+  text-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
+  line-height: 1.2;
+}
+
+.ipa {
+  font-size: 24px;
+  opacity: .9;
+  margin-bottom: 15px;
+  color: #93c5fd;
+}
+
+.cn {
+  font-size: 24px;
+  margin-top: 15px;
+  color: #86efac;
+}
+
+.en {
+  font-size: 20px;
+  opacity: .85;
+  margin-top: 10px;
+  color: #c4b5fd;
+}
+
+.meta {
+  margin-top: 20px;
+  font-size: 14px;
+  opacity: .6;
+  color: #94a3b8;
+}
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #3b82f6;
+}
+
+/* 主控制区域布局 */
+.main-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+  /* 限制主控制区宽度，和卡片/按钮组对齐 */
+  max-width: 800px;
+  width: 100%;
+  margin: 20px auto 0; /* 水平居中 */
+  box-sizing: border-box;
+}
+
+/* 按钮组样式 - 按钮根据内容自适应，不拉伸 */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  background: rgba(30, 41, 59, 0.8);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  max-width: 800px; 
+  width: 100%;
+  margin: 0 auto; /* 水平居中，避免贴边 */
+  box-sizing: border-box; /* 防止padding撑宽容器 */
+}
+
+.button-group button {
+  flex: 0 0 auto; /* 不拉伸，根据内容自适应 */
+  min-width: 80px;
+  padding: 8px 12px;
+  font-size: 13px;
+  white-space: nowrap; /* 防止文字换行 */
+  box-sizing: border-box;
+}
+
+/* 移除控制面板按钮的特殊样式 - 让它和其他按钮完全一样 */
+.button-group .collapse-toggle {
+  /* 移除所有特殊样式，继承.button-group button的样式 */
+}
+
+/* 折叠控制面板容器 */
+.controls-collapsible {
+  width: 100%;
+}
+
+/* 可折叠的控制面板按钮 - 这个样式只影响控制面板的折叠按钮 */
+.controls-collapsible .collapse-toggle {
+  width: 100%;
+  text-align: left;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  border-radius: 12px;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* 改为左对齐，而不是space-between */
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.controls-collapsible .collapse-toggle:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.collapse-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  font-size: 12px;
+  margin-right: 8px; /* 减少间距 */
+}
+
+/* 专门针对可折叠控制面板的样式 */
+.controls-collapsible .controls {
+  background: rgba(30, 41, 59, 0.8);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  max-height: 1000px;
+  opacity: 1;
+}
+
+/* 单词列表弹窗样式 */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background-color: #0f172a;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 1000px;
+  max-height: 80vh;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  position: relative; /* 为关闭按钮提供定位上下文 */
+}
+
+.close-btn {
+  color: #94a3b8;
+  position: sticky;
+  top: 10px;
+  right: 10px;
+  float: right;
+  font-size: 32px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+  z-index: 1001;
+  background: rgba(15, 23, 42, 0.9);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  margin-left: auto; /* 确保在右侧 */
+}
+
+.close-btn:hover {
+  color: #fbbf24;
+  background: rgba(15, 23, 42, 1);
+  transform: scale(1.1);
+}
+
+.modal-content h2 {
+  color: #60a5fa;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.word-list-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.word-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1e293b;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.word-list-table th {
+  background-color: #0f172a;
+  color: #60a5fa;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #334155;
+}
+
+.word-list-table td {
+  padding: 10px 15px;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.word-list-table tr:hover {
+  background-color: rgba(96, 165, 250, 0.1);
+}
+
+.arabic-cell {
+  font-size: 18px;
+  color: #fbbf24;
+  font-family: Arial, sans-serif;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .app {
+    padding: 15px;
+  }
+  
+  .arabic {
+    font-size: 48px;
+  }
+  
+  .control-group {
+    gap: 10px;
+  }
+  
+  button {
+    padding: 8px 12px;
+    min-width: auto;
+  }
+  
+  /* 移动端按钮组改为两行布局 - 按钮不拉伸 */
+  .button-group {
+    flex-wrap: wrap; /* 允许换行 */
+    gap: 8px;
+    max-width: 100%; /* 移动端占满父容器（已被.main-controls限制） */
+    padding: 8px;
+  }
+  
+  .button-group button {
+    flex: 0 0 calc(50% - 8px); /* 不拉伸，固定宽度 */
+    min-width: 100px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    padding: 6px 8px;
+    box-sizing: border-box; /* 确保padding包含在宽度内 */
+  }
+  
+   /* 移动端控制面板按钮也和其他按钮一样布局 */
+  .button-group .collapse-toggle {
+    flex: 0 0 calc(50% - 8px); /* 和其他按钮一样，不拉伸 */
+    min-width: 100px;
+    /* 移除特殊样式，继承普通按钮样式 */
+  } 
+  
+  .random-voice-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+    height: 28px;
+  }
+  
+  select, input[type="number"] {
+    min-width: auto;
+    flex: 1;
+  }
+  
+  .controls-collapsible .collapse-toggle {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+  
+  .voice-select-wrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .modal-content {
+    width: 95%;
+    margin: 10% auto;
+    padding: 15px;
+  }
+  
+  .word-list-table th,
+  .word-list-table td {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+  
+  .arabic-cell {
+    font-size: 16px;
+  }
+}
